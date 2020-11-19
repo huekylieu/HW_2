@@ -10,38 +10,42 @@ void sorting_insert(vector<int> & vec_in, int insert) {
 
 class elevator {
     public:
-        void up_button(int floor) {
+        void up_button(int floor_in) {
             if (state == 0) {
-                sorting_insert(stops,floor);
+                sorting_insert(stops, floor_in);
             }
             else if (state == -1) {
-                sorting_insert(queue,floor);
+                sorting_insert(queue, floor_in);
             }
             else if (state == 1) {
-                if (floor > current_floor) {
-                    sorting_insert(stops,floor);
+                if (floor_in > current_floor) {
+                    sorting_insert(stops, floor_in);
                 }
                 else {
-                   sorting_insert(queue,floor); 
+                   sorting_insert(queue, floor_in); 
                 }
             }
         }
 
-        void down_button(int floor) {
+        void down_button(int floor_in) {
             if (state == 0) {
-                sorting_insert(stops,floor);
+                sorting_insert(stops, floor_in);
             }
             else if (state == 1) {
-                sorting_insert(queue,floor);
+                sorting_insert(queue, floor_in);
             }
             else if (state == -1) {
-                if (floor < current_floor) {
-                    sorting_insert(stops,floor);
+                if (floor_in < current_floor) {
+                    sorting_insert(stops, floor_in);
                 }
                 else {
-                   sorting_insert(queue,floor); 
+                   sorting_insert(queue, floor_in); 
                 }
             }
+        }
+
+        void move_elevator() {
+
         }
 
     private:
