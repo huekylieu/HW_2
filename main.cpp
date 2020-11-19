@@ -1,26 +1,21 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
 
-void sort_insert(vector<int> & vec_in, int insert) {
-    if (vec_in.empty()) {
-        vec_in.insert(vec_in.begin(),insert);
-    }
-    for (int x = 0; x < vec_in.size(); x++) {
-        if (vec_in[x] >= insert) {
-            vec_in.insert(vec_in.begin() + x,insert);
-        }
-    }
+void sorting_insert(vector<int> & vec_in, int insert) {
+    vec_in.push_back(insert);
+    sort(vec_in.begin(),vec_in.end());
 }
 
 class elevator {
     public:
         void up_button(int floor) {
             if (state == 0) {
-                stops.push_back(floor);
+                sorting_insert(stops,floor);
             }
             else if (state == -1) {
-                queue.push_back(floor);
+                sorting_insert(queue,floor);
             }
         }
 
@@ -33,5 +28,19 @@ class elevator {
 };
 
 int main() {
+    bool another = 1;
+    int put_in;
+    vector<int> sorting;
+    while (another) {
+        cout << "Put in val";
+        cin >> put_in;
+        sorting_insert(sorting,put_in);
+        cout << "Another: ";
+        cin >> another;
+    }
+    
+    for (int x = 0; x < sorting.size(); x++) {
+        cout << sorting[x] << endl;
+    }
     return 0;
 }
