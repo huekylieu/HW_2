@@ -1,0 +1,4 @@
+up button : elevator is on standby; elevator is rising past
+down button: elevator is on standby; elevator is going down past
+
+elevator: up/down;extreme point;stops
