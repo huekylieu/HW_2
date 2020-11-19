@@ -3,6 +3,17 @@
 #include <vector>
 using namespace std;
 
+struct queue_obj {  //Stuct for members of queue
+    bool up;
+    int floor;
+};
+
+struct comp_queue {     //Compares queue members
+    inline bool operator() (const queue_obj& queue1, const queue_obj& queue2) {
+        return (queue1.floor < queue2.floor);
+    }
+};
+
 void sorting_insert(vector<int> & vec_in, int insert) {
     vec_in.push_back(insert);
     sort(vec_in.begin(),vec_in.end());
@@ -49,13 +60,16 @@ class elevator {
                 extreme_floor = 0;
                 state = 0;
             }
+            else if (stops.empty()) {
+
+            }
         }
 
     private:
-        int current_floor;
-        vector<int> stops;
-        vector<int> queue;
-        int extreme_floor;
+        int current_floor;  //Shows where elevator is
+        vector<int> stops;  //List of stops elevator must make
+        vector<int> queue;  //List of stops elvator cannot yet take
+        int extreme_floor;  //Furthest floor from elevator
         int state; //UP = 1;DOWN = -1;REST = 0
 };
 
