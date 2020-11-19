@@ -45,7 +45,10 @@ class elevator {
         }
 
         void move_elevator() {
-
+            if (stops.empty() && queue.empty()) {
+                extreme_floor = 0;
+                state = 0;
+            }
         }
 
     private:
