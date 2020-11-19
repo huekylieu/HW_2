@@ -17,6 +17,31 @@ class elevator {
             else if (state == -1) {
                 sorting_insert(queue,floor);
             }
+            else if (state == 1) {
+                if (floor > current_floor) {
+                    sorting_insert(stops,floor);
+                }
+                else {
+                   sorting_insert(queue,floor); 
+                }
+            }
+        }
+
+        void down_button(int floor) {
+            if (state == 0) {
+                sorting_insert(stops,floor);
+            }
+            else if (state == 1) {
+                sorting_insert(queue,floor);
+            }
+            else if (state == -1) {
+                if (floor < current_floor) {
+                    sorting_insert(stops,floor);
+                }
+                else {
+                   sorting_insert(queue,floor); 
+                }
+            }
         }
 
     private:
