@@ -96,6 +96,15 @@ class elevator {
             }
         }
 
+        void pers_bttn_prs (person person_in) {
+            if (person_in.button_press) {
+                up_button(person_in.start_floor);
+            }
+            else {
+                down_button(person_in.start_floor);
+            }
+        }
+
         void move_elevator() {
             if (stops.empty() && queue.empty()) {
                 extreme_floor = 0;
@@ -117,9 +126,17 @@ class elevator {
 
 class Building {
     public:
+        void press_buttons() {
+            for (int i = 0; i < people_queue.size(); i++) {
+                for (int j = 0; j < people_queue[i].size(); j++) {
+                    building_elevator.pers_bttn_prs(people_queue[i][j]);
+                }
+            }
+        }
     private:
         elevator building_elevator;
-        
+        clock master_clock;
+        vector<vector<person>> people_queue;
 };
 
 int main() {
