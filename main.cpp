@@ -5,7 +5,7 @@ using namespace std;
 
 struct queue_obj {  //Stuct for members of queue
     queue_obj(bool up_in, int floor_in) {
-        up = up_in;
+        up = up_in; //If the elvator is going up (false for down)
         floor = floor_in;
     }
     bool up;
@@ -65,11 +65,11 @@ class person {
 
 class elevator {
     public:
-        void up_button(int floor_in) {
+        void up_button(int floor_in) {  //Adds person to stops if they are in the same direction as the elvator; adds them to queue if they are not on the way of the elvator
             if (state == 0) {
                 sorting_insert(stops, floor_in);
             }
-            else if (state == -1) {
+            else if (state == -1) { //Needs work
                 queue_insert(queue, floor_in,0);
             }
             else if (state == 1) {
@@ -82,11 +82,11 @@ class elevator {
             }
         }
 
-        void down_button(int floor_in) {
+        void down_button(int floor_in) {    //Adds person to stops if they are in the same direction as the elvator; adds them to queue if they are not on the way of the elvator
             if (state == 0) {
                 sorting_insert(stops, floor_in);
             }
-            else if (state == 1) {
+            else if (state == 1) {  //Needs work
                 queue_insert(queue, floor_in,1);
             }
             else if (state == -1) {
@@ -108,7 +108,7 @@ class elevator {
             }
         }
 
-        void move_elevator() {
+        void move_elevator(clock clock_in) {    //Needs work
             int up = 0;
             int down = 0;
             if (stops.empty() && queue.empty()) {
@@ -125,12 +125,23 @@ class elevator {
                     }
                 }
                 if (up > down) {
+                    state = 1;
                     current_floor = queue[0].floor;
+                    //Travel time here
+                    clock_in.open_close_door();
                     extreme_floor =  queue[queue.size() - 1].floor;
                 }
                 else {
+                    state = -1;
                     current_floor = queue[queue.size() - 1].floor;
+                    //Travel time here
+                    clock_in.open_close_door();
                     extreme_floor = queue[0].floor;
+                }
+            }
+            else {
+                if (state == 1) {
+                    
                 }
             }
         }
@@ -158,6 +169,13 @@ class Building {
         clock master_clock;
         vector<vector<person>> people_in_queue; //Queue of people getting on elevator
         vector<vector<person>> people_out_queue;    //Queue of people after getting off elevator
+};
+
+//when an elevator arrives at a floor iterate through occupants to make sure everyone gets off at the floor if they can
+//make sure multiple instances of the same floor do not occur in stops
+
+class scheduler {
+
 };
 
 int main() {
