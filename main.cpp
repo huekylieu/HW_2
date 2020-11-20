@@ -4,6 +4,10 @@
 using namespace std;
 
 struct queue_obj {  //Stuct for members of queue
+    queue_obj(bool up_in, int floor_in) {
+        up = up_in;
+        floor = floor_in;
+    }
     bool up;
     int floor;
 };
@@ -19,6 +23,31 @@ void sorting_insert(vector<int> & vec_in, int insert) {
     sort(vec_in.begin(),vec_in.end());
 }
 
+void queue_insert(vector<queue_obj> & queue_in, int insert,bool up_in) {
+    queue_in.push_back(queue_obj(up_in,insert));
+    sort(queue_in.begin(),queue_in.end(),comp_queue());
+}
+
+class person {
+    public:
+        person (int start_in,int dest_in) {
+            start_floor = start_in;
+            destination = dest_in;
+            set_button_press();
+        }
+        int start_floor;
+        int destination;
+        bool button_press; //1 for up, 0 for down
+        void set_button_press() {
+            if (start_floor > destination) {
+                button_press = 0;
+            }
+            else {
+                button_press = 1;
+            }
+        }
+};
+
 class elevator {
     public:
         void up_button(int floor_in) {
@@ -26,14 +55,14 @@ class elevator {
                 sorting_insert(stops, floor_in);
             }
             else if (state == -1) {
-                sorting_insert(queue, floor_in);
+                queue_insert(queue, floor_in,0);
             }
             else if (state == 1) {
                 if (floor_in > current_floor) {
                     sorting_insert(stops, floor_in);
                 }
                 else {
-                   sorting_insert(queue, floor_in); 
+                   queue_insert(queue, floor_in,1); 
                 }
             }
         }
@@ -43,14 +72,14 @@ class elevator {
                 sorting_insert(stops, floor_in);
             }
             else if (state == 1) {
-                sorting_insert(queue, floor_in);
+                queue_insert(queue, floor_in,1);
             }
             else if (state == -1) {
                 if (floor_in < current_floor) {
                     sorting_insert(stops, floor_in);
                 }
                 else {
-                   sorting_insert(queue, floor_in); 
+                   queue_insert(queue, floor_in,0); 
                 }
             }
         }
@@ -68,7 +97,7 @@ class elevator {
     private:
         int current_floor;  //Shows where elevator is
         vector<int> stops;  //List of stops elevator must make
-        vector<int> queue;  //List of stops elvator cannot yet take
+        vector<queue_obj> queue;  //List of stops elvator cannot yet take
         int extreme_floor;  //Furthest floor from elevator
         int state; //UP = 1;DOWN = -1;REST = 0
 };
