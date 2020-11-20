@@ -18,23 +18,26 @@ struct comp_queue {     //Compares queue members
     }
 };
 
-void sorting_insert(vector<int> & vec_in, int insert) {
+void sorting_insert(vector<int> & vec_in, int insert) { //Sorts elevator stops by floor
     vec_in.push_back(insert);
     sort(vec_in.begin(),vec_in.end());
 }
 
-void queue_insert(vector<queue_obj> & queue_in, int insert,bool up_in) {
+void queue_insert(vector<queue_obj> & queue_in, int insert,bool up_in) {    //Sorts elevator queue by floor
     queue_in.push_back(queue_obj(up_in,insert));
     sort(queue_in.begin(),queue_in.end(),comp_queue());
 }
 
-class clock {
+class clock {   //Keeps track of time   //Need to add elevator travel time
     public:
         double get_time() {   //Returns time on clock
             return time;
         }
         void add_time(double time_in) { //Adds time to clock
             time += time_in;
+        }
+        void open_close_door() {
+            time += 6;  //It takes 6 sec for the door to open and then close (assuming person is very quick getting in and closing door)
         }
     private:
         double time;
@@ -106,12 +109,29 @@ class elevator {
         }
 
         void move_elevator() {
+            int up = 0;
+            int down = 0;
             if (stops.empty() && queue.empty()) {
                 extreme_floor = 0;
                 state = 0;
             }
             else if (stops.empty()) {
-
+                for (int i = 0; i < queue.size(); i++) {
+                    if (queue[i].up) {
+                        up++;
+                    }
+                    else {
+                        down++;
+                    }
+                }
+                if (up > down) {
+                    current_floor = queue[0].floor;
+                    extreme_floor =  queue[queue.size() - 1].floor;
+                }
+                else {
+                    current_floor = queue[queue.size() - 1].floor;
+                    extreme_floor = queue[0].floor;
+                }
             }
         }
 
@@ -127,16 +147,17 @@ class elevator {
 class Building {
     public:
         void press_buttons() {
-            for (int i = 0; i < people_queue.size(); i++) {
-                for (int j = 0; j < people_queue[i].size(); j++) {
-                    building_elevator.pers_bttn_prs(people_queue[i][j]);
+            for (int i = 0; i < people_in_queue.size(); i++) {
+                for (int j = 0; j < people_in_queue[i].size(); j++) {
+                    building_elevator.pers_bttn_prs(people_in_queue[i][j]);
                 }
             }
         }
     private:
         elevator building_elevator;
         clock master_clock;
-        vector<vector<person>> people_queue;
+        vector<vector<person>> people_in_queue; //Queue of people getting on elevator
+        vector<vector<person>> people_out_queue;    //Queue of people after getting off elevator
 };
 
 int main() {
