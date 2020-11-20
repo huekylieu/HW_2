@@ -28,6 +28,18 @@ void queue_insert(vector<queue_obj> & queue_in, int insert,bool up_in) {
     sort(queue_in.begin(),queue_in.end(),comp_queue());
 }
 
+class clock {
+    public:
+        double get_time() {   //Returns time on clock
+            return time;
+        }
+        void add_time(double time_in) { //Adds time to clock
+            time += time_in;
+        }
+    private:
+        double time;
+};
+
 class person {
     public:
         person (int start_in,int dest_in) {
@@ -98,24 +110,27 @@ class elevator {
         int current_floor;  //Shows where elevator is
         vector<int> stops;  //List of stops elevator must make
         vector<queue_obj> queue;  //List of stops elvator cannot yet take
+        vector<person> occupants; //People in elevator
         int extreme_floor;  //Furthest floor from elevator
         int state; //UP = 1;DOWN = -1;REST = 0
 };
 
+class Building {
+    public:
+    private:
+        elevator building_elevator;
+        
+};
+
 int main() {
-    bool another = 1;
-    int put_in;
-    vector<int> sorting;
-    while (another) {
-        cout << "Put in val";
-        cin >> put_in;
-        sorting_insert(sorting,put_in);
-        cout << "Another: ";
-        cin >> another;
-    }
-    
-    for (int x = 0; x < sorting.size(); x++) {
-        cout << sorting[x] << endl;
-    }
+    // vector<queue_obj> test_queue;    //Queue insert test block
+    // queue_insert(test_queue,5,1);
+    // queue_insert(test_queue,-15,1);
+    // queue_insert(test_queue,3,1);
+    // queue_insert(test_queue,20,1);
+    // queue_insert(test_queue,17,1);
+    // for (int i = 0; i < test_queue.size(); i++) {
+    //     cout << test_queue[i].floor << endl;
+    // }
     return 0;
 }
