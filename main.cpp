@@ -146,6 +146,17 @@ class elevator {
             }
         }
 
+        // void everyone_off (person person_in) {
+            // for (int i = 0; i < occupants.size(); i++)
+                // if (person_in.destination == current_floor) {
+                    // occupants.erase(occupants.begin() + i);
+        
+        void everyone_off (person person_in) {
+          for (int i = 0; i < occupants.size(); i++)
+            if (person_in.destination == current_floor) {
+              occupants.erase(std::remove(occupants.begin(), occupants.end(), i), occupants.end());
+            } // Added function, maybe works??
+
     private:
         int current_floor;  //Shows where elevator is
         vector<int> stops;  //List of stops elevator must make
