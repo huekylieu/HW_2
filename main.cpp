@@ -18,6 +18,8 @@ struct comp_queue {     //Compares queue members
     }
 };
 
+//to main fork
+
 void sorting_insert(vector<int> & vec_in, int insert) { //Sorts elevator stops by floor
     vec_in.push_back(insert);
     sort(vec_in.begin(),vec_in.end());
